@@ -22,13 +22,13 @@ const MapWithADirectionsRenderer = compose(
     componentDidMount() {
       const DirectionsService = new window.google.maps.DirectionsService();
 
-      // suppressMarkers: true,
-
       DirectionsService.route(
         {
-          origin: new window.google.maps.LatLng(41.85073, -87.65126),
-          destination: new window.google.maps.LatLng(41.85258, -87.65141),
-          travelMode: window.google.maps.TravelMode.DRIVING,
+          origin: new window.google.maps.LatLng(40.4123173, -3.7094858),
+          destination: new window.google.maps.LatLng( 40.4082958, -3.6991266),
+          waypoints: [{location :"40.4106789,-3.7067981", stopover: true},{location:"40.4082958,-3.6991266", stopover: true},],   
+          travelMode: window.google.maps.TravelMode.WALKING,
+          optimizeWaypoints: true,
         },
         (result, status) => {
           if (status === window.google.maps.DirectionsStatus.OK) {
@@ -51,7 +51,7 @@ const MapWithADirectionsRenderer = compose(
 )((props) => (
   <GoogleMap
     defaultZoom={7}
-    defaultCenter={new window.google.maps.LatLng(41.85073, -87.65126)}
+    defaultCenter={new window.google.maps.LatLng(40.41831,  -3.70275)}
   >
     {props.directions && (
       <DirectionsRenderer
