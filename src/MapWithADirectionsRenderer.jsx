@@ -8,7 +8,7 @@ const {
 } = require("react-google-maps");
 
 const googleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_MAPS_API_KEY}&v=3.exp&libraries=geometry,drawing,places`;
-
+const red = "rgb(200,16,46)";
 const MapWithADirectionsRenderer = compose(
   withProps({
     googleMapURL: googleMapsUrl,
@@ -22,6 +22,8 @@ const MapWithADirectionsRenderer = compose(
     componentDidMount() {
       const DirectionsService = new window.google.maps.DirectionsService();
 
+      // suppressMarkers: true,
+
       DirectionsService.route(
         {
           origin: new window.google.maps.LatLng(41.85073, -87.65126),
@@ -32,6 +34,12 @@ const MapWithADirectionsRenderer = compose(
           if (status === window.google.maps.DirectionsStatus.OK) {
             this.setState({
               directions: result,
+              options: {
+                polylineOptions: {
+                  strokeColor: red,
+                  strokeWeight: 6,
+                },
+              },
             });
           } else {
             console.error(`error fetching directions ${result}`);
@@ -45,7 +53,12 @@ const MapWithADirectionsRenderer = compose(
     defaultZoom={7}
     defaultCenter={new window.google.maps.LatLng(41.85073, -87.65126)}
   >
-    {props.directions && <DirectionsRenderer directions={props.directions} />}
+    {props.directions && (
+      <DirectionsRenderer
+        options={props.options}
+        directions={props.directions}
+      />
+    )}
   </GoogleMap>
 ));
 
